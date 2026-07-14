@@ -14,6 +14,8 @@
             printDown(n-1);
         }
     }*/
+
+
 /*  ข้อ 2
 int NDown(int n){
     printf("Iterative");
@@ -37,10 +39,63 @@ void NDownR(int n){
  
 }
 */
+
+/* ข้อ 3
+void printToN(int n){
+    for(int i = 1 ; i <= n; i++){
+        printf("%d",i);
+    }
+}
+
+void printToNR(int i , int n){
+    if (i == n) {
+        printf("num :  %d \n", i);
+    }
+    else if (i >= n) {
+       
+        printf("num :  %d \n", i);
+        return printToNR(i - 1, n);
+    }
+    else {
+       
+        printf("num :  %d \n", i);
+        return  printToNR(i + 1, n); 
+    } 
+
+}*/
+
+int sum ;
+int instance_num = 1;
+int sumToN_Iterative(int n){
+
+  for (int i = 1; i <= n; i++) {
+      sum += i;
+      printf("%d \n",i);
+  }
+  
+  return sum;
+
+}
+
+int sumToN_Recursive(int i, int n) {
+    // Base case: stop when i reaches or passes n
+    if (i > n) { 
+        return 0; 
+    }
+    
+    // Print current step
+    printf("%d\n", i);
+    
+    // Recursive step: Add current 'i' to the sum of the rest of the numbers
+    return i + sumToN_Recursive(i + 1, n);
+}
+
+
+
 int main (){
-    // ข้อ 2
-    /*
-    NDown(5);
-    NDownR(6);
-    */
+
+    printf("Sum of Iterativer: %d \n", sumToN_Iterative(5));
+
+    printf("Sum of Recursive:  %d \n", sumToN_Recursive(1, 5));
+
 }
