@@ -2,74 +2,97 @@
 #include <stdlib.h>
 #include <string.h>
 
-char* employeeArray[100];
+/* ---------- 1. โครงสร้างข้อมูล ---------- */
+typedef struct node {
+    char name[20];      /* 1. ข้อมูลชื่อ */
+    int  age;            /* 2. ข้อมูลอายุ */
+    struct node *next;   /* ตัวชี้ไปยัง node ถัดไป */
+} type_node;
 
-//Class constructor employee
-typedef struct Employee {
-    int id;
-    char name[50];
-    char salary[50];
-}Employee;
+typedef type_node *nodeptr;
 
-//add employee to array
-void addEmployee(int id, const char* name, const char* salary) {
-    struct Employee* newEmployee = (struct Employee*)malloc(sizeof(struct Employee));
-    newEmployee->id = id;
-    strcpy(newEmployee->name, name);
-    strcpy(newEmployee->salary, salary);
+nodeptr head = NULL;   /* หัวลิสต์ */
 
-    // Store the employee in the array
-    employeeArray[id] = (char*)newEmployee;
-    if(employeeArray[id] == NULL) {
-        printf("Memory allocation failed for employee %d\n", id);
+/* ---------- 2. ฟังก์ชันเพิ่มข้อมูล (Insert ท้ายลิสต์) ---------- */
+void insertNode(const char *name, int age) {
+    nodeptr n = (nodeptr) malloc(sizeof(type_node));
+    if (n == NULL) {
+        printf("Memory allocation failed\n");
         return;
     }
-    printf("Employee added successfully!\n");
-}
+    strcpy(n->name, name);
+    n->age = age;
+    n->next = NULL;
 
-void displayEmployees() {
-    printf("Employee List:\n");
-    for (int i = 0; i < 10; i++) {
-        if (employeeArray[i] != NULL) {
-            struct Employee* emp = (struct Employee*)employeeArray[i];
-            printf("ID: %d, Name: %s, Salary: %s\n", emp->id, emp->name, emp->salary);
+    if (head == NULL) {
+        head = n;
+    } else {
+        nodeptr temp = head;
+        while (temp->next != NULL) {
+            temp = temp->next;
         }
-    }
-}
-//check salary over20000 
-void DisplayCheckSalary() {
-    printf("================================================================\n");
-    printf("Employee Salary > 20000\n");
-    for (int i = 0; i < 10; i++) {
-        if (employeeArray[i] != NULL) {
-            struct Employee* emp = (struct Employee*)employeeArray[i];
-            // Simple check - replace with actual salary comparison if needed
-            if (strcmp(emp->salary, "20000") > 0) {
-                printf("Name: %s\n", emp->name);
-            }
-        }
+        temp->next = n;
     }
 }
 
+/* ---------- 3. ฟังก์ชันแสดงข้อมูลทั้งหมด ---------- */
+void displayAll(void) {
+    printf("========\n");
+    printf("Name  Age\n");
+    printf("========\n");
+    nodeptr temp = head;
+    while (temp != NULL) {
+        printf("%s  %d\n", temp->name, temp->age);
+        temp = temp->next;
+    }
+}
 
-int main() {
-    int id;
-    char name[50];
-    char salary[50];
-    int i = 0;
-    while(i < 10){
-        printf("employee  คนที่: %d in Array\n", i);
-        printf("Enter employee name: ");
-        scanf("%s", name);
-        printf("Enter employee salary: ");
-        scanf("%s", salary);
-    
-    
-        addEmployee(i, name, salary);
-        i++;
+/* ---------- 4. ฟังก์ชันลบข้อมูลตามชื่อ ---------- */
+void deleteNode(const char *name) {
+    nodeptr temp = head;
+    nodeptr prev = NULL;
+
+    while (temp != NULL && strcmp(temp->name, name) != 0) {
+        prev = temp;
+        temp = temp->next;
     }
 
-    displayEmployees();
-    DisplayCheckSalary();
+    if (temp == NULL) {
+        printf("Not found: %s\n", name);
+        return;
+    }
+
+    if (prev == NULL) {
+        head = temp->next;   /* ลบ node แรก */
+    } else {
+        prev->next = temp->next;
+    }
+
+    printf("Delete %s\n", temp->name);
+    free(temp);
+}
+
+/* ---------- main ---------- */
+int main(void) {
+    char nameA[20], nameB[20];
+    int ageA, ageB;
+
+    printf("Insert name A: ");
+    scanf("%s", nameA);
+    printf("Insert age A: ");
+    scanf("%d", &ageA);
+    insertNode(nameA, ageA);
+
+    printf("Insert name B: ");
+    scanf("%s", nameB);
+    printf("Insert age B: ");
+    scanf("%d", &ageB);
+    insertNode(nameB, ageB);
+
+    displayAll();
+
+    deleteNode(nameA);
+    deleteNode(nameB);
+
     return 0;
 }

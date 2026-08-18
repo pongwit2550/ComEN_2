@@ -2,14 +2,17 @@
 #include <stdlib.h>
 #include <string.h>
 
-char* employeeArray[100];
+
 
 //Class constructor employee
 typedef struct Employee {
     int id;
-    char name[50];
-    char salary[50];
+    char name[100];
+    char salary[100];
 }Employee;
+
+struct Employee* employeeArray[100];
+
 
 //add employee to array
 void addEmployee(int id, const char* name, const char* salary) {
@@ -19,7 +22,7 @@ void addEmployee(int id, const char* name, const char* salary) {
     strcpy(newEmployee->salary, salary);
 
     // Store the employee in the array
-    employeeArray[id] = (char*)newEmployee;
+    employeeArray[id] = newEmployee;
     if(employeeArray[id] == NULL) {
         printf("Memory allocation failed for employee %d\n", id);
         return;
@@ -44,7 +47,8 @@ void DisplayCheckSalary() {
         if (employeeArray[i] != NULL) {
             struct Employee* emp = (struct Employee*)employeeArray[i];
             // Simple check - replace with actual salary comparison if needed
-            if (strcmp(emp->salary, "20000") > 0) {
+            int salaryValue = atoi(emp->salary); // Convert salary string to integer
+            if (salaryValue > 20000) {
                 printf("Name: %s\n", emp->name);
             }
         }
@@ -54,10 +58,10 @@ void DisplayCheckSalary() {
 
 int main() {
     int id;
-    char name[50];
-    char salary[50];
+    char name[100];
+    char salary[100];
     int i = 0;
-    while(i < 10){
+    while(i < 5){
         printf("employee  คนที่: %d in Array\n", i);
         printf("Enter employee name: ");
         scanf("%s", name);
