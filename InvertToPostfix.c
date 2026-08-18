@@ -129,6 +129,5 @@ int main(){
 	printf("\nOutput:\n");
 	infixToPostfix(infix);
 	//printf("Postfix expression: %s\n", postfix);
-	
 	return 0;
 }
