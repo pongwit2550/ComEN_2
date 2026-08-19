@@ -8,7 +8,7 @@
 typedef struct Employee {
     int id;
     char name[100];
-    char salary[100];
+    int salary[100];
 }Employee;
 
 struct Employee* employeeArray[100];
@@ -19,7 +19,7 @@ void addEmployee(int id, const char* name, const char* salary) {
     struct Employee* newEmployee = (struct Employee*)malloc(sizeof(struct Employee));
     newEmployee->id = id;
     strcpy(newEmployee->name, name);
-    strcpy(newEmployee->salary, salary);
+    newEmployee->salary[0] = atoi(salary); 
 
     // Store the employee in the array
     employeeArray[id] = newEmployee;
@@ -35,7 +35,7 @@ void displayEmployees() {
     for (int i = 0; i < 10; i++) {
         if (employeeArray[i] != NULL) {
             struct Employee* emp = (struct Employee*)employeeArray[i];
-            printf("ID: %d, Name: %s, Salary: %s\n", emp->id, emp->name, emp->salary);
+            printf("ID: %d, Name: %s, Salary: %d\n", emp->id, emp->name, emp->salary[0]);
         }
     }
 }
@@ -47,7 +47,7 @@ void DisplayCheckSalary() {
         if (employeeArray[i] != NULL) {
             struct Employee* emp = (struct Employee*)employeeArray[i];
             // Simple check - replace with actual salary comparison if needed
-            int salaryValue = atoi(emp->salary); // Convert salary string to integer
+            int salaryValue = emp->salary[0]; // Get the salary value
             if (salaryValue > 20000) {
                 printf("Name: %s\n", emp->name);
             }
@@ -61,7 +61,7 @@ int main() {
     char name[100];
     char salary[100];
     int i = 0;
-    while(i < 5){
+    while(i < 10){
         printf("employee  คนที่: %d in Array\n", i);
         printf("Enter employee name: ");
         scanf("%s", name);

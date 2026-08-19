@@ -46,7 +46,7 @@ void displayAll(void) {
         temp = temp->next;
     }
 }
-
+   
 /* ---------- 4. ฟังก์ชันลบข้อมูลตามชื่อ ---------- */
 void deleteNode(const char *name) {
     nodeptr temp = head;
