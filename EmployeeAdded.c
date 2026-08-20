@@ -15,11 +15,11 @@ struct Employee* employeeArray[100];
 
 
 //add employee to array
-void addEmployee(int id, const char* name, const char* salary) {
+void addEmployee(int id, const char* name, const int salary) {
     struct Employee* newEmployee = (struct Employee*)malloc(sizeof(struct Employee));
     newEmployee->id = id;
     strcpy(newEmployee->name, name);
-    newEmployee->salary[0] = atoi(salary); 
+    newEmployee->salary[0] = salary;
 
     // Store the employee in the array
     employeeArray[id] = newEmployee;
@@ -59,14 +59,15 @@ void DisplayCheckSalary() {
 int main() {
     int id;
     char name[100];
-    char salary[100];
+    int salary;
     int i = 0;
     while(i < 10){
-        printf("employee  คนที่: %d in Array\n", i);
+        int j = i;
+        printf("employee  คนที่: %d in Array\n", j++);
         printf("Enter employee name: ");
         scanf("%s", name);
         printf("Enter employee salary: ");
-        scanf("%s", salary);
+        scanf("%d", &salary);
     
     
         addEmployee(i, name, salary);
