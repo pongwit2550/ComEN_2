@@ -13,17 +13,17 @@ struct Node *tail = NULL;
 struct Node *q;
 
 
-type_nodePtr NewNode(int new_data){
+type_nodePtr NewNode(int new_data, TYPE_NODE *next){
     if(head == NULL){
         type_nodePtr new_node = (type_nodePtr)malloc(sizeof(TYPE_NODE));
         new_node->data = new_data;
-        new_node->next = head;
+        new_node->next = next;
         head = new_node;
         tail = head;
     }else{
         type_nodePtr new_node = (type_nodePtr)malloc(sizeof(TYPE_NODE));
         new_node->data = new_data;
-        new_node->next = head;
+        new_node->next = next;
         head = new_node;
     }
 }
@@ -53,19 +53,27 @@ void mergQtoList(TYPE_NODE *nq){
     tail = nq;        
 }
 
-int main(){
-    NewNode(1);
-    //NewNode(2);
-    NewNode(3);
-    
-    q = (type_nodePtr)malloc(sizeof(TYPE_NODE));
-    q->data = 2;
-    q->next = NULL;
+void print(TYPE_NODE *head){
+    TYPE_NODE *current = head;
+    while (current != NULL) {
+        printf("%d -> ", current->data);
+        current = current->next;
+    }
+    printf("NULL\n");
+}
 
-    printTialandQ(tail,q);
-    mergQtoList(q);
+int main(){
+    NewNode(1,head);
+    NewNode(2,head);
+    NewNode(3,head);
+
+    for (int i = 4; i <= 5; i++) {
+        NewNode(i, head);
+    }
+
     printList(head);
-    //free (q);
+    print(head);
+
     type_nodePtr tmp;
     while (head != NULL) {
         tmp = head;

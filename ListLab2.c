@@ -13,17 +13,17 @@ struct Node *tail = NULL;
 struct Node *q;
 
 
-type_nodePtr NewNode(int new_data){
+type_nodePtr NewNode(int new_data, TYPE_NODE *next){
     if(head == NULL){
         type_nodePtr new_node = (type_nodePtr)malloc(sizeof(TYPE_NODE));
         new_node->data = new_data;
-        new_node->next = head;
+        new_node->next = next;
         head = new_node;
         tail = head;
     }else{
         type_nodePtr new_node = (type_nodePtr)malloc(sizeof(TYPE_NODE));
         new_node->data = new_data;
-        new_node->next = head;
+        new_node->next = next;
         head = new_node;
     }
 }
@@ -54,9 +54,10 @@ void mergQtoList(TYPE_NODE *nq){
 }
 
 int main(){
-    NewNode(1);
+    NewNode(1,head);
     //NewNode(2);
-    NewNode(3);
+    //NewNode(3,head);
+    
     
     q = (type_nodePtr)malloc(sizeof(TYPE_NODE));
     q->data = 2;
@@ -64,6 +65,11 @@ int main(){
 
     printTialandQ(tail,q);
     mergQtoList(q);
+    printList(head);
+
+    tail->next = NewNode(3,NULL);
+    tail = tail->next;
+
     printList(head);
     //free (q);
     type_nodePtr tmp;
