@@ -39,6 +39,15 @@ void inorderTraversal(struct TreeNode* root) {
     }
 }
 
+// Function to perform pre-order traversal of the binary tree
+void preOrderTraversal(struct TreeNode* root) {
+    if (root != NULL) {
+        printf("%d -> ", root->data);
+        preOrderTraversal(root->left);
+        preOrderTraversal(root->right);
+    }
+}
+
 // Function to free the binary tree
 void freeTree(struct TreeNode* root) {
     if (root != NULL) {     
