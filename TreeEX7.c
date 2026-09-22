@@ -9,8 +9,8 @@ typedef struct TreeNode{
 }Treenode;
 typedef struct TreeNode *TYPE_NODEPTR;
 
-TYPE_NODEPTR root = NULL;      // ตัวจริง คงที่ตลอดโปรแกรม ใช้ตอน exit/free เท่านั้น
-TYPE_NODEPTR roottmp = NULL;   // cursor ตำแหน่งปัจจุบัน ใช้กับทุกคำสั่ง
+TYPE_NODEPTR root = NULL;      
+TYPE_NODEPTR roottmp = NULL;   
 
 int running = 1;
 
@@ -49,7 +49,7 @@ TYPE_NODEPTR insert_left(TYPE_NODEPTR t, int data){
     newNode->Mother = t;
 
     t->left = newNode;
-    roottmp = newNode;   // cursor เดินตาม node ที่เพิ่ง insert
+    //roottmp = newNode;  
     return t;
 }
 
@@ -70,7 +70,7 @@ TYPE_NODEPTR insert_right(TYPE_NODEPTR t, int data){
     newNode->Mother = t;
 
     t->right = newNode;
-    roottmp = newNode;   // cursor เดินตาม node ที่เพิ่ง insert
+    //roottmp = newNode;   
     return t;
 }
 
@@ -88,7 +88,7 @@ TYPE_NODEPTR gotoLeft(TYPE_NODEPTR t){
         return NULL;
     }
     roottmp = t->left;
-    printf("Now at node: %d\n", roottmp->data);
+    //printf(" %d ", roottmp->data);
     return roottmp;
 }
 
@@ -96,9 +96,9 @@ TYPE_NODEPTR gotoRight(TYPE_NODEPTR t){
     if (t->right == NULL) {
         printf("No right child!\n");
         return NULL;
-    }
+    } 
     roottmp = t->right;
-    printf("Now at node: %d\n", roottmp->data);
+    //printf(" %d ", roottmp->data);
     return roottmp;
 }
 
@@ -108,7 +108,7 @@ TYPE_NODEPTR gotoMother(TYPE_NODEPTR t){
         return NULL;
     }
     roottmp = t->Mother;
-    printf("Now at node: %d\n", roottmp->data);
+    //printf(" %d ", roottmp->data);
     return roottmp;
 }
 
@@ -145,6 +145,13 @@ void postOrderTraversal(TYPE_NODEPTR node) {
 }
 
 void printMenu(void){
+}
+
+void funcSelect() {
+    int choice = 0;
+    int data = 0;
+    
+    
     const char *Select[12] = {
         "Exit The Program (Enter 0)",
         "Create Root Node",
@@ -159,7 +166,7 @@ void printMenu(void){
         "Post-Order Traversal (whole tree)",
         "option 11;"
     };
-
+    
     printf("\n==================================================\n");
     printf("|                SELECT FUNCTION                 |\n");
     printf("==================================================\n");
@@ -172,20 +179,7 @@ void printMenu(void){
     }
     printf("==================================================\n");
     printf("Enter your choice: ");
-}
-
-void funcSelect() {
-    int choice = 0;
-    int data = 0;
-
-    printMenu();
-    if (scanf("%d", &choice) != 1) {
-        // เคลียร์ input ที่ parse ไม่ได้ (เช่น user พิมพ์ตัวอักษร)
-        int c;
-        while ((c = getchar()) != '\n' && c != EOF);
-        printf("Invalid input, please enter a number.\n");
-        return;
-    }
+    scanf("%d", &choice);
 
     
     if (choice >= 2 && choice <= 10 && roottmp == NULL) {
@@ -259,29 +253,32 @@ void funcSelect() {
             printf("\n");
             break;
         case 11:
+            printf("------------7-------------\n");
+            inorderTraversal(root);
+            printf("\n");
             insert_left(roottmp,4);  
-            inorderTraversal(roottmp); 
+            inorderTraversal(root); 
             printf("\n");
             
             insert_right(roottmp,12);  
-            inorderTraversal(roottmp); 
+            inorderTraversal(root); 
             printf("\n");
 
             roottmp = gotoLeft(roottmp);
             insert_left(roottmp,2);  
-            inorderTraversal(roottmp); 
+            inorderTraversal(root); 
             printf("\n");
 
             insert_right(roottmp,6);  
-            inorderTraversal(roottmp); 
+            inorderTraversal(root); 
             printf("\n");
 
             roottmp = gotoMother(roottmp);
             roottmp = gotoRight(roottmp);
             insert_left(roottmp,10);  
-            inorderTraversal(roottmp); printf("\n");
+            inorderTraversal(root); printf("\n");
             insert_right(roottmp,14);  
-            inorderTraversal(roottmp); printf("\n");
+            inorderTraversal(root); printf("\n");
             break;
 
         default:
